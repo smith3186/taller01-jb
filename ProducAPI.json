@@ -1,0 +1,1408 @@
+{
+	"info": {
+		"_postman_id": "99de38f1-a85d-4930-a747-b77e8dd10e29",
+		"name": "ProducAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23799031"
+	},
+	"item": [
+		{
+			"name": "Producto",
+			"item": [
+				{
+					"name": "V1",
+					"item": [
+						{
+							"name": "happypath",
+							"item": [
+								{
+									"name": "CrearProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//capturar el valor de la variable\r",
+													"var jsonresponse=pm.response.json(); //crear variable\r",
+													"pm.collectionVariables.set(\"sku_creado\",jsonresponse.sku);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													"//validar el atributo\r",
+													"pm.test(\"El codigo de estado de la respuesta es verdadero\", function () {\r",
+													"    pm.expect(jsonresponse.status).to.be.true;\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar sku\r",
+													"pm.test(\"La respuesta contiene valores validos\", function () {\r",
+													"    pm.expect(jsonresponse.sku).to.be.a(\"string\");\r",
+													"    pm.expect(jsonresponse.message).to.be.a(\"string\");\r",
+													"    pm.expect(jsonresponse.status).to.equals(true);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const esquemavalido={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"sku\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"boolean\"},\r",
+													"        \"message\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"sku\",\"status\",\"message\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(esquemavalido);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo\r",
+													"pm.test(\"El tiempo de respuesta es menor a 50ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"Samsung\",\r\n    \"description\":\"Samsung 25\",\r\n    \"price\":\"3000\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"Samsung\",\r\n    \"description\":\"Samsung 25\",\r\n    \"price\":2000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarPrecio",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"Samsung\",\r\n    \"description\":\"Samsung 25\",\r\n    \"price\":2000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProducrto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"Samsung\",\r\n    \"description\":\"Samsung 25\",\r\n    \"price\":2000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProductos",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"Samsung\",\r\n    \"description\":\"Samsung 25\",\r\n    \"price\":2000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EliminarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\r\n    \"price\":2000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "happypath DataProvider",
+							"item": [
+								{
+									"name": "CrearProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//capturar el valor de la variable\r",
+													"var jsonresponse=pm.response.json(); //crear variable\r",
+													"pm.collectionVariables.set(\"sku_creado\",jsonresponse.sku);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													"//validar el atributo\r",
+													"pm.test(\"El codigo de estado de la respuesta es verdadero\", function () {\r",
+													"    pm.expect(jsonresponse.status).to.be.true;\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar sku\r",
+													"pm.test(\"La respuesta contiene valores validos\", function () {\r",
+													"    pm.expect(jsonresponse.sku).to.be.a(\"string\");\r",
+													"    pm.expect(jsonresponse.message).to.be.a(\"string\");\r",
+													"    pm.expect(jsonresponse.status).to.equals(true);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const esquemavalido={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"sku\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"boolean\"},\r",
+													"        \"message\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"sku\",\"status\",\"message\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(esquemavalido);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo\r",
+													"pm.test(\"El tiempo de respuesta es menor a 50ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(50);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarPrecio",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProducrto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProductos",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EliminarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{descrption}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "sadpath",
+							"item": [
+								{
+									"name": "CrearProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 400\r",
+													"pm.test(\"El estatus es 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 100ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{names}}\",\r\n    \"description\":\"{{descriptions}}\",\r\n    \"price\":\"{{prices}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 400\r",
+													"pm.test(\"El estatus es 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\":{\"type\":\"string\"},\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 500ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{description}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActualizarPrecio",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 400\r",
+													"pm.test(\"El estatus es 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\":{\"type\":\"string\"},\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 500ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{description}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProducrto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 400\r",
+													"pm.test(\"El estatus es 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 100ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{description}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v2/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v2",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "RecuperarProductos",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 404\r",
+													"pm.test(\"El estatus es 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 100ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{description}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v3/product/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v3",
+												"product",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EliminarProducto",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//crear variable\r",
+													"var jsonresponse=pm.response.json();\r",
+													"\r",
+													"\r",
+													"//validar error 404\r",
+													"pm.test(\"El estatus es 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"//validar los tipos de valor de campo\r",
+													"pm.test(\"La respuesta contiene valores string\", function () {\r",
+													"     pm.expect(jsonresponse.timestamp).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.status).to.be.a(\"number\");\r",
+													"     pm.expect(jsonresponse.error).to.be.a(\"string\");\r",
+													"     pm.expect(jsonresponse.path).to.be.a(\"string\");\r",
+													"});\r",
+													"\r",
+													"//validar esquema\r",
+													"pm.test(\"La respuesta contiene un esquema valido\", function () {\r",
+													"  const validaresquema={\r",
+													"    \"type\":\"object\",\r",
+													"    \"properties\":{\r",
+													"        \"timestamp\": {\"type\":\"string\"},\r",
+													"        \"status\": {\"type\":\"number\"},\r",
+													"        \"error\": {\"type\":\"string\"},\r",
+													"        \"path\": {\"type\":\"string\"}\r",
+													"    },\r",
+													"    \"required\":[\"timestamp\",\"status\",\"error\",\"path\"]\r",
+													"  };\r",
+													"  pm.response.to.have.jsonSchema(validaresquema);\r",
+													"\r",
+													"});\r",
+													"\r",
+													"//validar tiempo de respuesta\r",
+													"pm.test(\"El tiempo de respuesta es menor a 100ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{Token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"name\":\"{{name}}\",\r\n    \"description\":\"{{description}}\",\r\n    \"price\":\"{{price}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/product/{{sku_creado}}/",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"{{sku_creado}}",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "sku_creado",
+			"value": "43718be9-545c-4ddc-8245-a4a76571051d/",
+			"type": "string"
+		}
+	]
+}

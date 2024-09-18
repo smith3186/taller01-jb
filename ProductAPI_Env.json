@@ -1,0 +1,15 @@
+{
+	"id": "b85fd2c0-757b-4900-8267-d1eb93e9ee3e",
+	"name": "ProductAPI_Env",
+	"values": [
+		{
+			"key": "Token",
+			"value": "aGFzaGRzZnNkZnNkZnNkZnNk",
+			"type": "secret",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-09-12T02:49:03.081Z",
+	"_postman_exported_using": "Postman/11.11.1"
+}
